@@ -2,24 +2,29 @@ import React from "react";
 // react bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
 // custom scss
-import "./style.scss";
-import { Route, Routes, Navigate } from "react-router-dom";
-// pages
+import "./global.scss";
+// Components
 import Home from "./pages/Home";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Navbar from "./components/Navbar";
+// react router
+import { Switch, Route, Redirect } from "react-router-dom";
+import { UserProvider } from "./UserContext/UserContext";
+import Delete from "./pages/Delete";
+import ReadComp from "./pages/Read";
+import CreateUser from "./pages/Create";
+import Edit from "./pages/Edit";
 
 const App = () => {
   return (
     <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact/*" element={<Contact />} />
-        <Route element={<Navigate to="/" />} />
-      </Routes>
+      <Switch>
+        <UserProvider>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/delete/:id" component={Delete} />
+          <Route exact path="/read/:id" component={ReadComp} />
+          <Route exact path="/create" component={CreateUser} />
+          <Route exact path="/edit/:id" component={Edit} />
+        </UserProvider>
+      </Switch>
     </>
   );
 };
